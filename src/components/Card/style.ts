@@ -41,6 +41,7 @@ export const StyHeader = styled.header`
 
 export const StyPhoro = styled.div`
   width: 100%;
+  max-width: 100%;
   max-height: 600px;
   background-color: #efefef;
   border-bottom: 1px solid #efefef;
@@ -78,5 +79,6 @@ export const StyMessage = styled.div`
     flex: 1 1 auto;
     font-size: 10px;
     color: #8f8f8f;
+    margin-left: 10px;
   }
 `;

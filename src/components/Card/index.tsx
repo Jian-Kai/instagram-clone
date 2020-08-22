@@ -1,14 +1,15 @@
 import React from "react";
 import dayjs from "dayjs";
 import { StyArticle, StyHeader, StyPhoro, StyMessage } from "./style";
+import Avatar from "../Avatar";
 
-interface I_Message {
+export interface I_Message {
   username: string;
   message: string;
   publish_date: string;
 }
 
-interface I_Post {
+export interface I_Post {
   user: {
     name: string;
     avatar: string;
@@ -38,7 +39,7 @@ const Index: React.FC<I_Post> = (props) => {
     <StyArticle>
       <StyHeader>
         <div>
-          <img src={user.avatar} alt={user.name} />
+          <Avatar imgUrl={user.avatar} name={user.name} size={30} />
         </div>
         <div className="title">
           <span className="main">
