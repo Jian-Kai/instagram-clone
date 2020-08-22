@@ -27,10 +27,14 @@ export const StyFixed = styled.div`
     width: 100%;
     height: 100%;
     margin: 0 auto;
+    z-index: 999;
+    position: relative;
+    background-color: inherit;
     .logo {
       width: auto;
       height: 30px;
       margin-right: 10px;
+      flex: 0 1 30%;
       > img {
         width: auto;
         height: auto;
@@ -39,4 +43,10 @@ export const StyFixed = styled.div`
       }
     }
   }
+`;
+
+export const StyAddPost = styled.div`
+  cursor: pointer;
+  color: #222222;
+  flex: 0 1 auto;
 `;

@@ -4,8 +4,8 @@ import { StyMain } from "./style";
 import { db, postsRef } from "../../utils/useFirebase";
 import dayjs from "dayjs";
 
-const second2Date = (second: number) => {
-  return dayjs.unix(second).format("MMMM DD YYYY");
+const dateFormat = (date: string) => {
+  return dayjs(date).format("MMMM DD YYYY");
 };
 
 const Index = () => {
@@ -25,13 +25,13 @@ const Index = () => {
         const data: any = doc.data();
         const comments: I_Message[] = data.comments.map((c: any) => ({
           ...c,
-          publish_date: second2Date(c.publish_date),
+          publish_date: dateFormat(c.publish_date),
         }));
         return {
           id: doc.id,
           post: {
             ...data,
-            publish_date: second2Date(data.publish_date.seconds),
+            publish_date: dateFormat(data.publish_date.seconds),
             comments,
           },
         };
