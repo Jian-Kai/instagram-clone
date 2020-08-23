@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { StyHeader, StyFixed, StyAddPost } from "./style";
 import PostFrom from "../PostForm";
 import { AddBoxOutlined } from "@material-ui/icons";
@@ -29,7 +30,15 @@ const fakeData = {
   ],
 };
 
-const Index = () => {
+interface I_Header {
+  user: {
+    displayName: string;
+  } | null;
+}
+
+const Index: React.FC<I_Header> = (props) => {
+  const { user } = props;
+
   const [open, setOpen] = React.useState(false);
 
   const handleAddPost = (content: any) => {
@@ -48,7 +57,9 @@ const Index = () => {
           <StyAddPost onClick={() => handleAddPost(fakeData)}>
             <AddBoxOutlined fontSize="large" color="inherit" />
           </StyAddPost>
-          <div style={{ flex: "0 1 30%" }}></div>
+          <div style={{ flex: "0 1 30%", textAlign: "right" }}>
+            {!!user ? `${user.displayName}` : <Link to="/login">Login</Link>}
+          </div>
         </div>
         <PostFrom open={open} />
       </StyFixed>
