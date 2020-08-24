@@ -18,5 +18,6 @@ export const StyPostForm = styled.div`
   }
   > input {
     width: 100%;
+    margin-bottom: 15px;
   }
 `;

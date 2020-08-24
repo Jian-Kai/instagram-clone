@@ -50,3 +50,29 @@ export const StyAddPost = styled.div`
   color: #222222;
   flex: 0 1 auto;
 `;
+
+export const StyProfile = styled.div<{ open: boolean }>`
+  cursor: pointer;
+
+  .drop_down {
+    display: ${(props) => (props.open ? "blcok" : "none")};
+    position: absolute;
+    top: 60px;
+    right: 0;
+    padding: 10px 0;
+    background-color: #ffffff;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border: 1px solid #efefef;
+    border-top: 0;
+    ul {
+      padding: 0 10px;
+      > li {
+        height: 40px;
+        line-height: 40px;
+        vertical-align: middle;
+        text-align: center;
+      }
+    }
+  }
+`;

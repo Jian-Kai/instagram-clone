@@ -19,12 +19,10 @@ function App() {
   React.useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        console.log(authUser);
         setUser({
           displayName: authUser.displayName as string,
         });
       } else {
-        console.log("logout");
         setUser(null);
       }
     });

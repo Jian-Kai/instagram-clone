@@ -73,7 +73,7 @@ export const StyMessage = styled.div`
     margin-right: 10px;
   }
   .text {
-    flex: 1 1 70%;
+    flex: 1 1 65%;
   }
   .date {
     flex: 1 1 auto;

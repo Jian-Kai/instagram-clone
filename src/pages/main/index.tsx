@@ -1,11 +1,11 @@
 import React from "react";
 import Card, { I_Post, I_Message } from "../../components/Card";
 import { StyMain } from "./style";
-import { db, postsRef } from "../../utils/useFirebase";
+import { postsRef } from "../../utils/useFirebase";
 import dayjs from "dayjs";
 
-const dateFormat = (date: string) => {
-  return dayjs(date).format("MMMM DD YYYY");
+const dateFormat = (time: number) => {
+  return dayjs.unix(time).format("MMMM DD YYYY");
 };
 
 const Index = () => {
@@ -23,7 +23,7 @@ const Index = () => {
         post: I_Post;
       }[] = snapshop.docs.map((doc) => {
         const data: any = doc.data();
-        const comments: I_Message[] = data.comments.map((c: any) => ({
+        const comments: I_Message[] = data.comments?.map((c: any) => ({
           ...c,
           publish_date: dateFormat(c.publish_date),
         }));

@@ -1,9 +1,11 @@
 import React from "react";
+import cx from "classnames";
 import { Link } from "react-router-dom";
-import { StyHeader, StyFixed, StyAddPost } from "./style";
+import { StyHeader, StyFixed, StyAddPost, StyProfile } from "./style";
 import PostFrom from "../PostForm";
 import { AddBoxOutlined } from "@material-ui/icons";
-import { postsRef } from "../../utils/useFirebase";
+import { ClickAwayListener } from "@material-ui/core";
+import { postsRef, auth } from "../../utils/useFirebase";
 
 const fakeData = {
   user: {
@@ -30,11 +32,31 @@ const fakeData = {
   ],
 };
 
-interface I_Header {
-  user: {
-    displayName: string;
-  } | null;
+interface I_Profile {
+  displayName: string;
 }
+interface I_Header {
+  user: I_Profile | null;
+}
+
+const Profile: React.FC<I_Profile & { onLogout: () => void }> = (props) => {
+  const { displayName, onLogout } = props;
+
+  const [open, setOpen] = React.useState(false);
+  return (
+    <ClickAwayListener onClickAway={() => setOpen(false)}>
+      <StyProfile open={open}>
+        <div onClick={() => setOpen(!open)}>{displayName}</div>
+        <div className="drop_down">
+          <ul>
+            <li>上傳大頭貼</li>
+            <li onClick={onLogout}>登出</li>
+          </ul>
+        </div>
+      </StyProfile>
+    </ClickAwayListener>
+  );
+};
 
 const Index: React.FC<I_Header> = (props) => {
   const { user } = props;
@@ -43,7 +65,10 @@ const Index: React.FC<I_Header> = (props) => {
 
   const handleAddPost = (content: any) => {
     setOpen(!open);
-    // postsRef.doc().set(content);
+  };
+
+  const handleLogout = () => {
+    auth.signOut();
   };
 
   return (
@@ -55,13 +80,17 @@ const Index: React.FC<I_Header> = (props) => {
             <img src="/instagram.png" alt="instagram-colne" />
           </div>
           <StyAddPost onClick={() => handleAddPost(fakeData)}>
-            <AddBoxOutlined fontSize="large" color="inherit" />
+            {!!user && <AddBoxOutlined fontSize="large" color="inherit" />}
           </StyAddPost>
           <div style={{ flex: "0 1 30%", textAlign: "right" }}>
-            {!!user ? `${user.displayName}` : <Link to="/login">Login</Link>}
+            {!!user ? (
+              <Profile {...user} onLogout={handleLogout} />
+            ) : (
+              <Link to="/login">Login</Link>
+            )}
           </div>
         </div>
-        <PostFrom open={open} />
+        <PostFrom open={open} username={user?.displayName || ""} />
       </StyFixed>
     </StyHeader>
   );
