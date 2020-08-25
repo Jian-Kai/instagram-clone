@@ -18,7 +18,7 @@ const Index = () => {
   >([]);
 
   React.useEffect(() => {
-    const sub = postsRef
+    const unsubscribe = postsRef
       .orderBy("publish_date", "desc")
       .onSnapshot((snapshop) => {
         const firePosts: {
@@ -43,7 +43,7 @@ const Index = () => {
       });
 
     return () => {
-      sub();
+      unsubscribe();
     };
   }, []);
 
