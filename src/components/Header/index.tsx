@@ -1,11 +1,10 @@
 import React from "react";
-import cx from "classnames";
 import { Link } from "react-router-dom";
 import { StyHeader, StyFixed, StyAddPost, StyProfile } from "./style";
 import PostFrom from "../PostForm";
 import { AddBoxOutlined } from "@material-ui/icons";
 import { ClickAwayListener } from "@material-ui/core";
-import { postsRef, auth } from "../../utils/useFirebase";
+import { auth } from "../../utils/useFirebase";
 
 const fakeData = {
   user: {
@@ -76,9 +75,9 @@ const Index: React.FC<I_Header> = (props) => {
       <div />
       <StyFixed>
         <div className="inside">
-          <div className="logo">
+          <Link className="logo" to="/">
             <img src="/instagram.png" alt="instagram-colne" />
-          </div>
+          </Link>
           <StyAddPost onClick={() => handleAddPost(fakeData)}>
             {!!user && <AddBoxOutlined fontSize="large" color="inherit" />}
           </StyAddPost>
@@ -90,7 +89,11 @@ const Index: React.FC<I_Header> = (props) => {
             )}
           </div>
         </div>
-        <PostFrom open={open} username={user?.displayName || ""} />
+        <PostFrom
+          open={open}
+          username={user?.displayName || ""}
+          onUpload={() => setOpen(false)}
+        />
       </StyFixed>
     </StyHeader>
   );

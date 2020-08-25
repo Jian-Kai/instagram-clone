@@ -5,6 +5,7 @@ import { postsRef } from "../../utils/useFirebase";
 import dayjs from "dayjs";
 
 const dateFormat = (time: number) => {
+  if (!time) return "";
   return dayjs.unix(time).format("MMMM DD YYYY");
 };
 
@@ -17,27 +18,33 @@ const Index = () => {
   >([]);
 
   React.useEffect(() => {
-    postsRef.onSnapshot((snapshop) => {
-      const firePosts: {
-        id: string;
-        post: I_Post;
-      }[] = snapshop.docs.map((doc) => {
-        const data: any = doc.data();
-        const comments: I_Message[] = data.comments?.map((c: any) => ({
-          ...c,
-          publish_date: dateFormat(c.publish_date),
-        }));
-        return {
-          id: doc.id,
-          post: {
-            ...data,
-            publish_date: dateFormat(data.publish_date.seconds),
-            comments,
-          },
-        };
+    const sub = postsRef
+      .orderBy("publish_date", "desc")
+      .onSnapshot((snapshop) => {
+        const firePosts: {
+          id: string;
+          post: I_Post;
+        }[] = snapshop.docs.map((doc) => {
+          const data: any = doc.data();
+          const comments: I_Message[] = data.comments?.map((c: any) => ({
+            ...c,
+            publish_date: dateFormat(c.publish_date.seconds),
+          }));
+          return {
+            id: doc.id,
+            post: {
+              ...data,
+              publish_date: dateFormat(data.publish_date?.seconds),
+              comments,
+            },
+          };
+        });
+        setPosts(firePosts);
       });
-      setPosts(firePosts);
-    });
+
+    return () => {
+      sub();
+    };
   }, []);
 
   return (

@@ -28,6 +28,7 @@ const Index: React.FC<I_Input> = (props) => {
         onChange={(e) => {
           setInput(e.target.value);
         }}
+        autoComplete="off"
         {...other}
       />
     </StyInput>

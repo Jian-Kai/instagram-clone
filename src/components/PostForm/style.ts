@@ -16,8 +16,26 @@ export const StyPostForm = styled.div`
     box-shadow: 10px 10px 30px 0px rgba(0, 0, 0, 0.4);
     transform: translateY(0);
   }
-  > input {
-    width: 100%;
-    margin-bottom: 15px;
+
+  .upload {
+    > input {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  }
+`;
+
+export const StyProgress = styled.div<{ progress: string | null }>`
+  height: 10px;
+  border: 1px solid #efefef;
+  background-color: #efefef;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  &::after {
+    content: "";
+    display: block;
+    width: ${(props) => props.progress || "0%"};
+    height: 100%;
+    background-color: #0095f6;
   }
 `;
