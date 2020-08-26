@@ -9,13 +9,13 @@ const dateFormat = (time: number) => {
   return dayjs.unix(time).format("MMMM DD YYYY");
 };
 
+interface I_State {
+  id: string;
+  post: I_Post;
+}
+
 const Index = () => {
-  const [posts, setPosts] = React.useState<
-    {
-      id: string;
-      post: I_Post;
-    }[]
-  >([]);
+  const [posts, setPosts] = React.useState<I_State[]>([]);
 
   React.useEffect(() => {
     const unsubscribe = postsRef
